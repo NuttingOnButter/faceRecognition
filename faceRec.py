@@ -45,16 +45,8 @@ while True:
         matches = face_recognition.compare_faces(encodeListKnown, encodeface)
 
         faceDis = face_recognition.face_distance(encodeListKnown, encodeface)
-        print(faceDis)
+        #print(faceDis)
         matchIndex = np.argmin(faceDis)
-
-        if matches != [matchIndex]:
-            name = "Unknown"
-            y1,x1,y2,x2 = faceLoc
-            y1,x1,y2,x2 = y1*4,x1*4,y2*4,x2*4
-            cv2.rectangle(img, (x1,y1), (x2,y2), (0, 0, 255), 1)
-            cv2.rectangle(img, (x1,y2-35), (x2, y2), (0, 0, 255), cv2.FILLED)
-            cv2.putText(img, name, (x1-150, y2-6), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 255), 1 )
 
         if matches[matchIndex]:
             name = classNames[matchIndex].upper()
@@ -63,6 +55,14 @@ while True:
             y1,x1,y2,x2 = y1*4,x1*4,y2*4,x2*4
             cv2.rectangle(img, (x1,y1), (x2,y2), (0, 255, 0), 1)
             cv2.rectangle(img, (x1,y2-35), (x2, y2), (0, 255, 0), cv2.FILLED)
+            cv2.putText(img, name, (x1-150, y2-6), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 255), 1 )
+
+        else:
+            name = "Unknown"
+            y1,x1,y2,x2 = faceLoc
+            y1,x1,y2,x2 = y1*4,x1*4,y2*4,x2*4
+            cv2.rectangle(img, (x1,y1), (x2,y2), (0, 0, 255), 1)
+            cv2.rectangle(img, (x1,y2-35), (x2, y2), (0, 0, 255), cv2.FILLED)
             cv2.putText(img, name, (x1-150, y2-6), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 255), 1 )
 
 # Initzalize Webcam
